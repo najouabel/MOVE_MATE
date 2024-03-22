@@ -1,0 +1,26 @@
+
+<div class="container mx-auto px-40 py-10 flex flex-col justify-center items-center">
+  <div class="bg-gray-100 h-80 md:h-36 w-full flex flex-wrap justify-center items-center rounded-md ">
+    <app-search-bar></app-search-bar>
+  </div>
+  <div class="w-full">
+    <app-offer [offer]="offer"  *ngFor="let offer of offers | paginate: config"></app-offer>
+  </div>
+  <div *ngIf="!isLoading" class="text-center w-full mx-0 sm:mx-auto my-8">
+    <pagination-controls  [id]="config.id!"
+                             [directionLinks]="directionLinks"
+                             [autoHide]="autoHide"
+                             [responsive]="responsive"
+                             [previousLabel]="labels.previousLabel"
+                             [nextLabel]="labels.nextLabel"
+                             [screenReaderPaginationLabel]="labels.screenReaderPaginationLabel"
+                             [screenReaderPageLabel]="labels.screenReaderPageLabel"
+                             [screenReaderCurrentLabel]="labels.screenReaderCurrentLabel"
+                             (pageChange)="onPageChange($event)"
+                             (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+  </div>
+</div>
+
+<div *ngIf="isLoading" class="loading-overlay">
+  <div class="spinning-circle"></div>
+</div>

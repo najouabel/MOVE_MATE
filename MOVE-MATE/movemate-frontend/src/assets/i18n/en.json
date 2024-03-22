@@ -1,0 +1,15 @@
+
+{
+  "login":"login",
+  "logo":"assets/logo.png",
+  "who-we-are-title": "Who are we?",
+  "who-we-are-content": "Movemate is a move management app that aims to make it easier to find and book personalized services by directly connecting requesters to independent movers. Our goal is to simplify the moving process to make it more convenient and accessible for everyone.",
+  "mission-title":"Our mission",
+  "mission-content":"Movemate's mission is to make it easier to find and book personalized moving services by connecting requesters directly to independent movers. We aim to simplify the moving process to make it more convenient and accessible for everyone.",
+  "How-does-it-work-title":"How does it work?",
+  "How-does-it-work-content":"movemate offers a range of transportation service services, including Small Truck, Large Truck. Users can choose from these services based on their specific needs.",
+  "advantages": "Advantages NEOvalet",
+  "rapiditéservice":"assets/rapiditéservice-eng.png"
+
+
+}

@@ -1,0 +1,64 @@
+<div class="w-full h-full mb-3 mt-6 hover:scale-[1.03] duration-500 ease-in-out hover:-z-40">
+  <div class="flex flex-col sm:flex-row justify-between ">
+
+      <!-- image  -->
+      <div class="flex justify-center p-6 rounded-tl-sm rounded-bl-sm">
+          <img class="w-full object-cover sm:h-auto sm:w-28" src="assets/{{offerImage}}" />
+      </div>
+
+        <div class="w-full h-[300px] sm:h-auto flex flex-col sm:flex-row justify-around sm:justify-center shadow-sm rounded-sm border bg-white">
+        <div class="w-full h-full py:4 sm:py-0 flex flex-col justify-center ">
+            <p class="pb-2 mx-6 text-center sm:text-left font-thin text-md"><span class="font-bold text-custOrangeStr">Service Provier : </span>{{offer.username}}</p>
+             <div class="py-2 flex flex-col justify-center sm:block mx-2 text-center sm:text-left">
+              <p class="inline mx-4 font-thin text-md">
+                <span class="input-group-text">
+                  <i class="fa-sharp fa-solid fa-file-contract"></i>
+                </span>
+                  {{offer.service}}
+              </p>
+              <p class="inline mx-4 font-thin text-md">
+                <span class="input-group-text">
+                  <i class="fa-sharp fa-solid fa-file-contract"></i>
+                </span>
+                  {{offer.meantype}}
+              </p>
+              <p class="inline mx-4 font-thin text-md">
+                  <span class="input-group-text">
+                    <i class="fa-sharp fa-solid fa-location-dot"></i>
+                  </span>
+                  {{offer.from}}
+              </p>
+              <p class="inline mx-4 font-thin text-md">
+                  <span class="input-group-text">
+                    <i class="fa-sharp fa-solid fa-location-dot"></i>
+                  </span>
+                  {{offer.to}}
+              </p>
+              <p class="inline mx-4 font-thin text-md">
+                  <span class="input-group-text">
+                    <i class="fa-sharp fa-solid fa-calendar"></i>
+                  </span>
+                  {{offer.createdAt | date:'dd/MM/yyyy h:mma' }}
+              </p>
+
+            </div>
+        </div>
+        <div class="mb-6 sm:my-auto mx-auto px-6 cursor-pointer animate-bounce" (click)="showDetails = !showDetails">
+              <svg class="h-4 text-sm font-thin text-custPurple" fill xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor"  d="M201.4 374.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 306.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/></svg>
+        </div>
+        <div *ngIf="userRole === 'ROLE_RECIPIENT' " class="flex flex-wrap justify-center sm:justify-end">
+          <button (click)="reserve(offer.id)" class="mx-2 px-4 py-2 bg-gray-50 text-custOrangeStr hover:bg-white  hover:shadow-sm hover:rounded-sm hover:border hover:border-custPurple">Reserve</button>
+            </div>
+      </div>
+
+    </div>
+  </div>
+    <div  [ngClass]="showDetails? 'opacity-100' : 'opacity-0'" class="bg-gray-50  w-10/12 mx-auto border  rounded-md  transition-all ease-in-out duration-300 delay-100">
+      <div *ngIf="showDetails" class=" px-4 py-2 mt-0">
+        <div>
+          <label class="font-semibold">Description : </label>
+          {{offer.description}}
+        </div>
+
+      </div>
+    </div>

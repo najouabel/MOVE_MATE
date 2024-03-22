@@ -1,0 +1,12 @@
+<div class="page-container">
+  <div class="conent-wrap">
+      <app-navbar></app-navbar>
+      <div [ngClass]="hasRoute(['/login', '/signup']) ? '' : 'mt-24'">
+        <router-outlet></router-outlet>
+      </div>
+  </div>
+  <div class="footer-class">
+    <app-footer></app-footer>
+  </div>
+
+</div>

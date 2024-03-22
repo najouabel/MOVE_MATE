@@ -1,0 +1,18 @@
+<div class="dropdown ">
+  <button (click)="showLangMenu()" class="dropbtn hover:bg-gray-100">
+    <img class="h-6 w-full" src="assets/{{lang}}.svg"  alt="fr"/>
+  </button>
+  <ng-container *ngIf="isShowLang">
+    <div *ngIf="isShowLang ? 'flex justify-center items-center' : 'hidden'" class="dropdown-content z-[999] p-1 w-10">
+        <div class="">
+          <img (click)="onLangChange('fr')" class="cursor-pointer w-full my-1 " src="assets/fr.svg" alt="fr"/>
+        </div>
+        <div class="">
+          <img (click)="onLangChange('en')" class="cursor-pointer w-full my-1 h-12" src="assets/en.svg"  alt="eng"/>
+        </div>
+    </div>
+  </ng-container>
+</div>
+
+
+

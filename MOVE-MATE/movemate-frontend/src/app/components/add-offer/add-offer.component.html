@@ -1,0 +1,169 @@
+<div
+  class="bg-white w-full h-fit relative flex flex-row justify-center px-0 sm:px-4"
+>
+  <div class="w-full h-full bg-white grid grid-cols-12 p-0 md:p-4">
+    <div
+      class="flex flex-col justify-around col-start-2 col-end-12 h-fit"
+    >
+      <form
+        [formGroup]="addOfferForm"
+        (ngSubmit)="onSubmit($event)"
+        method="post"
+        name="loginfom"
+        id="formId"
+      >
+        <div class="text-center text-lg font-semibold text-black">
+          <h3>ADDING OFFER</h3>
+        </div>
+        <div class="flex flex-col justify-center">
+          <div class="flex flex-row flex-wrap justify-around">
+            <div class="flex flex-col justify-around">
+              <!-- left side of form  -->
+              <div class="w-full">
+                <div class="my-5 w-full text-center rounded-sm">
+                   <label  >From</label>
+                  <select
+                  id="role"
+                  formControlName="from"
+                  name="from"
+                  class="border h-full w-full px-3  outline-none"
+                >
+                  <option [ngValue]="null" [disabled]="true">
+                    From
+                  </option>
+                  <option
+                    *ngFor="let city of cities"
+                    [ngValue]="city"
+                  >
+                    {{ city.name }}
+                  </option>
+                </select>
+                  <div
+                    *ngIf="from?.invalid && (from?.dirty || from?.touched)"
+                    class="text-red-500 text-sm"
+                  >
+                    <div *ngIf="from?.errors?.['required']">
+                      This field is required.
+                    </div>
+                  </div>
+                </div>
+                <div class="my-5 w-full text-center rounded-sm">
+                  <label  >To</label>
+                  <select
+                  id="to"
+                  formControlName="to"
+                  name="to"
+                  class="border h-full w-full px-3  outline-none"
+                >
+                  <option [ngValue]="null" [disabled]="true">
+                    To
+                  </option>
+                  <option
+                    *ngFor="let city of cities"
+                    [ngValue]="city"
+                  >
+                    {{ city.name }}
+                  </option>
+                </select>
+                  <div
+                    *ngIf="
+                      to?.invalid && (to?.dirty || to?.touched)
+                    "
+                    class="text-red-500 text-sm"
+                  >
+                    <div *ngIf="to?.errors?.['required']">
+                      This field is required.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- right side  -->
+            <div class="w-full md:w-2/5">
+              <div class="m-5 text-center rounded-sm">
+                 <label for="role">Service</label>
+                <select
+                  id="service"
+                  formControlName="service"
+                  name="service"
+                  class="border h-full w-full px-3  outline-none"
+                >
+                  <option [ngValue]="null" [disabled]="true">
+                    Service
+                  </option>
+                  <option
+                    *ngFor="let service of services"
+                    [ngValue]="service"
+                  >
+                    {{ service.name }}
+                  </option>
+                </select>
+                <div
+                  *ngIf="
+                    service?.invalid &&
+                    (service?.dirty || service?.touched)
+                  "
+                  class="text-red-500 text-sm"
+                >
+                  <div *ngIf="service?.errors?.['required']">
+                    Service is required.
+                  </div>
+                </div>
+              </div>
+              <div class="m-5 text-center rounded-sm">
+                <!-- <div class="col-span-2 bg-red-200 "></div> -->
+                <label  >Mean </label>
+                <select
+                  id="mean"
+                  formControlName="meantype"
+                  name="meantype"
+                  class="border h-full w-full px-3  outline-none"
+                >
+                  <option [ngValue]="null" [disabled]="true">
+                    Mean
+                  </option>
+                  <option *ngFor="let mean of means" [ngValue]="mean">
+                    {{ mean.name }}
+                  </option>
+                </select>
+                <div
+                  *ngIf="
+                    meantype?.invalid && (meantype?.dirty || meantype?.touched)
+                  "
+                  class="text-red-500 text-sm"
+                >
+                  <div *ngIf="meantype?.errors?.['required']">
+                    Mean is required.
+                  </div>
+                </div>
+              </div>
+
+          </div>
+
+
+          <div class="text-center w-full px-5 my-4" id="btnContainerId"></div>
+            <button
+              type="submit"
+              [disabled]="!addOfferForm.valid"
+              id="submitBtnId"
+              class="w-full {{
+                !addOfferForm.valid ? 'bg-gray-400' : 'bg-custOrangeStr'
+              }}  shadow-sm rounded-sm py-3 text-white text-md font-regular"
+            >
+              NEW
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div *ngIf="isAddingOfferResult" class="loading-overlay flex justify-center items-center my-auto mx-auto">
+    <div class="h-1/4">
+      <lottie-player  [src]="animationSrc"  background="transparent"  speed="1" loop  autoplay >
+      </lottie-player>
+    </div>
+  </div>
+</div>
+

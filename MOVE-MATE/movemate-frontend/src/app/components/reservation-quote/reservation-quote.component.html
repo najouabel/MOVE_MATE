@@ -1,0 +1,21 @@
+<div class="bg-gray-100  text-center my-1 mx-3 border border-gray flex flex-col shadow-md rounded-xl p-8">
+ 
+  <div class="text-centern  text-green-800/50 mx-8 py-6 px-8 bg-gray-50 border-4 border-green-800/50  rounded-md font-bold ">
+      <p class="font-italic text-4xl font-extrabold text-md">
+        {{price}}
+      </p>
+      <p class="italic text-md text-black font-semibold text-md">
+        i.e. 25$ per day
+      </p>
+  </div>
+  <div class="px-8">
+    <button
+      (click)="showDetailedForm()"
+      type="button"
+      id="submitBtnId"
+      class="w-full  my-4 shadow-sm rounded-md py-3 bg-green-800/50 text-white text-lg font-semibold"
+      >
+          CONTINUE
+    </button>
+  </div>
+</div>

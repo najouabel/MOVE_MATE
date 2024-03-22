@@ -1,0 +1,33 @@
+<div class="flex flex-col">
+  <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+    <div class="py-4 pt-0 inline-block min-w-full sm:px-6 lg:px-8">
+      <div class="overflow-hidden">
+        <table class="min-w-full text-center">
+          <thead class="border-b bg-custGray/60">
+          <tr>
+           <th *ngFor="let key of keys" scope="col" class="text-sm font-bold px-6 py-4">
+             {{ key }}
+           </th>
+          </tr>
+          </thead >
+          <tbody>
+          <tr *ngFor="let row of getPage(currentPage)" class="bg-white border-b">
+            <td *ngFor="let record of row" class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+              {{ record }}
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<nav aria-label="Page navigation">
+  <ul class="flex  justify-center mx-auto my-4">
+    <li><button class="border border-custGray h-10 px-5 text-indigo-600 transition-colors duration-150 bg-white rounded-l-lg focus:shadow-outline hover:bg-custGray/60">Prev</button></li>
+       <li *ngFor="let r of [].constructor(totalOfPages); let i = index"><a (click)="setCurrentPage(i+1)" [ngClass]="{'text-white bg-custGray hover:bg-custGray': currentPage == i+1}" class="border border-custGray flex items-center h-10 px-5 align-middle cursor-pointer transition-colors duration-150 bg-white focus:shadow-outline hover:bg-custGray/60 ">{{i+1}}</a></li>
+
+    <li><button class="border border-custGray h-10 px-5 text-indigo-600 transition-colors duration-150 bg-white rounded-r-lg focus:shadow-outline hover:bg-custGray/60">Next</button></li>
+  </ul>
+</nav>
+

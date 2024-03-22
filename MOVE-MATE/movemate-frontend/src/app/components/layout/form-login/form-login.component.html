@@ -1,0 +1,80 @@
+
+<ng-container *ngIf="!isAuthenticated">
+  <div  class=" px-4 py-3 border">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" method="post" name="loginfom" id="formId">
+    <div class="m-5 text-center">
+
+      <div class="border-custPurple">
+          <input formControlName="email" class="w-full rounded-lg border bg-gray-50 outline-none py-3 px-2" type="email" name="email"
+                 placeholder="Email" required>
+      </div>
+      <div *ngIf="email?.invalid && (email?.dirty || email?.touched)"
+              class="text-red-500 text-sm">
+
+                  <div *ngIf="email?.errors?.['required']">
+                      Email is required.
+                  </div>
+                  <div *ngIf="email?.errors?.['email']">
+                      Email must be a valid email.
+                  </div>
+      </div>
+
+    </div>
+
+    <div class="m-5 text-center ">
+      <!-- <div class="col-span-2 bg-red-200 "></div> -->
+      <div class=" ">
+          <input formControlName="password" class="w-full rounded-lg border bg-gray-50 outline-none py-3 px-2" type="password" name="password"
+                 placeholder="Password" required>
+      </div>
+      <div *ngIf="password?.invalid && (password?.dirty || password?.touched)"
+          class="text-red-500 text-sm">
+
+                  <div *ngIf="password?.errors?.['required']">
+                      Password is required.
+                  </div>
+                  <div *ngIf="password?.errors?.['pattern']">
+                      Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character.
+                  </div>
+
+          </div>
+    </div>
+
+    <div class="w-full flex justify-center my-3">
+      <button type="submit" [disabled]="!loginForm.valid" id="submitBtnId"
+              class="w-1/5 mx-4 inline-block border rounded-lg {{!loginForm.valid ? 'bg-gray-200 text-gray-500' : 'bg-custGray text-black'}}  py-3 text-white font-semibold"
+      >
+      <!-- <div *ngIf="!loading" class="animate-spin text-center bg-green-600 h-5 w-5 mr-3 ..." viewBox="0 0 24 24">
+      </div> -->
+      <ng-container *ngIf="loading">
+        Loading...
+      </ng-container>
+      <ng-container *ngIf="!loading">
+        LOGIN
+      </ng-container>
+
+      </button>
+
+    </div>
+
+
+
+    <div class="flex justify-center">
+      <p>
+        You don't have an account? <strong routerLink="/signup" class="cursor-pointer">Register Now!</strong>
+      </p>
+    </div>
+
+    </form>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="isAuthenticated">
+  <div class=" px-4 py-3 shadow-md border">
+   <div class="flex justify-center items-center py-3 px-6 font-semibold">
+      <p class="">{{userEmail}}</p>
+   </div>
+  </div>
+</ng-container>
+
+

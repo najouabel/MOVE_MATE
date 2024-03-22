@@ -1,0 +1,50 @@
+<ng-container *ngIf="!hasRoute('/login') && !hasRoute('/signup')">
+
+  <div class="z-[999] fixed h-24 top-0 w-full left-0 grid grid-cols-8 bg-white backdrop-blur-sm shadow-md">
+    <div class="col-start-2 col-end-3 p-2 my-auto mx-auto">
+      <img class="h-20 w-24rem cursor-pointer" src="assets/logo.png" alt="logomyNEOvalet" (click)="navigateToHome()">
+    </div>
+    <div class="col-start-7 col-end-8 my-auto mx-auto  justify-items-center items-center">
+      <div class="flex justify-center items-center flex-wrap">
+        <div class="relative inline-block text-left dropdown">
+          <div  class="flex items-center">
+            <a *ngIf="!isAuthenticated" routerLink="/login" class="px-4 py-1 rounded-full hover:border hover:border-1 cursor-pointer font-semibold">
+              {{'login' | translate }}?
+            </a>
+
+            <ng-container *ngIf="isAuthenticated" class="w-20">
+              <button *ngIf="isAuthenticated" class="inline-flex justify-center mx-4 px-2 py-2 rounded-full text-sm font-medium leading-5 text-gray-700 transition duration-150 ease-in-out  hover:border hover:border-custPurple  hover:text-custGreen1 focus:outline-none focus:border-custPurple focus:shadow-outline-blue active:bg-custPurple active:text-white"
+              type="button" aria-haspopup="true" aria-expanded="true" aria-controls="headlessui-menu-items-117">
+                  <img class="h-8" src="assets/profile.svg" alt="profileicon" >
+              </button>
+            </ng-container>
+
+          </div>
+
+
+          <div class="opacity-0 invisible dropdown-menu transition-all duration-300 transform origin-top-right -translate-y-2 scale-95">
+            <div class="absolute right-0 w-64 mt-2 origin-top-right bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg outline-none" aria-labelledby="headlessui-menu-button-1" id="headlessui-menu-items-117" role="menu">
+              <div *ngIf="isAuthenticated" class="px-4 py-3">
+                <p class="text-sm leading-5">Signed in as</p>
+                <p class="text-sm font-medium leading-5 text-gray-900 truncate">{{userEmail}}</p>
+              </div>
+              <div *ngIf="isAuthenticated" class="py-1">
+                <a href="javascript:void(0)" tabindex="0" class="text-gray-700 flex justify-between w-full px-4 py-2 text-sm leading-5 text-left hover:bg-gray-50"  role="menuitem" >Account</a>
+                <a [routerLink]="dashboard" tabindex="1" class="text-gray-700 flex justify-between w-full px-4 py-2 text-sm leading-5 text-left hover:bg-gray-50"  role="menuitem" >Dashboard</a>
+              </div>
+              <div *ngIf="isAuthenticated"  class="py-1">
+                <a (click)="logout()" tabindex="2" class="cursor-pointer text-gray-700 flex justify-between w-full px-4 py-2 text-sm leading-5 text-left hover:bg-gray-50"  role="menuitem" >Log out</a>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+
+    </div>
+  </div>
+
+</ng-container>
+

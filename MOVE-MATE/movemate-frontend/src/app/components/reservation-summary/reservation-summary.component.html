@@ -1,0 +1,60 @@
+<div class="flex flex-col justify-between w-[300px] min-h-[500px] h-auto px-8 text-center font-semibold">
+  <div class="flex flex-col justify-center w-full h-full rounded-md ">
+    <div class="w-full text-xl py-2 italic">
+      <h3>Summary</h3>
+    </div>
+    <div class="my-8">
+      <div>
+        <!-- <p class="font-extrabold text-xl">Aller</p> -->
+        <span class="text-2xl">
+          <i class="fa-solid fa-circle-arrow-right"></i>
+        </span>
+      </div>
+      <div>
+
+        <p>
+          <span class="text-lg">
+            <i class="fa-solid fa-location-dot"></i>
+          </span>
+          {{departSite?.name}}, {{departMeetingPoint}}</p>
+
+        <p>
+          <span class="text-lg">
+          <i class="fa-solid fa-calendar"></i>
+          </span>
+          {{departDate}}, {{checkin}}
+        </p>
+      </div>
+    </div>
+    <div class="my-2">
+      <div>
+        <!-- <p class="font-extrabold text-xl">Retour</p> -->
+        <span class="text-2xl">
+          <i class="fa-solid fa-circle-arrow-left"></i>
+        </span>
+      </div>
+      <div>
+        <p>
+          <span class="text-lg">
+            <i class="fa-solid fa-location-dot"></i>
+          </span>
+          {{arrivalSite?.name}}, {{arrivalMeetingPoint}}</p>
+
+        <p>
+          <span class="text-lg">
+            <i class="fa-solid fa-calendar"></i>
+          </span>
+          {{arrivalDate}},  {{checkout}}
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="bg-gray-50 border border-gray-400 px-4 text-md flex justify-around items-center rounded-xl h-20">
+    <!-- <p class="py-2 mx-1 text-lg">Total</p> -->
+    <span class="text-3xl">
+      <i class="fa-solid fa-money-check-dollar"></i>
+    </span>
+    <p class="text-xl py-2">{{price}}$</p>
+  </div>
+</div>

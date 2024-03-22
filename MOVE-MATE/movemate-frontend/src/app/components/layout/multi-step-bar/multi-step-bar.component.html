@@ -1,0 +1,18 @@
+<div class="mx-3 h-16 border-[#9FD9B0] bg-white rounded-md border border-[#9FD9B0]">
+    <div class="h-full w-9/12 mx-auto flex flex-row justify-between items-center">
+      <div class="flex flex-row bg-custGray/60 p-2 rounded-lg border-none justify-around items-center">
+        <img class="w-6 h-auto mr-2" src="/assets/order.svg" alt="order">
+        <p class="font-semibold text-sm mb-none">My Order</p>
+      </div>
+      <p class="text-[#9FD9B0] text-2xl">- - - - - - - -</p>
+      <div [ngClass]="{'bg-custGray/60 border-none': reservationService.current == 'service' || reservationService.current == 'signin'}" class="flex flex-row p-2 rounded-lg border border-[#9FD9B0] justify-around items-center">
+            <img class="w-6 h-auto mr-2" src="/assets/car.svg" alt="service">
+            <p class="font-semibold text-sm mb-none">Services</p>
+      </div>
+      <p class="text-[#9FD9B0] text-2xl">- - - - - - - -</p>
+      <div [ngClass]="{'bg-custGray/60 border-none': reservationService.current == 'signin'}"class="flex flex-row p-2 rounded-lg border border-[#9FD9B0] justify-around items-center">
+          <img class="w-6 h-auto mr-2" src="/assets/sign-in.svg" alt="signin">
+          <p class="font-semibold text-sm mb-none">Sign In</p>
+      </div>
+    </div>
+</div>

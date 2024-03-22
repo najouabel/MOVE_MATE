@@ -1,0 +1,28 @@
+<form [formGroup]="filterForm" (ngSubmit)="applySearchFilter()" method="post" name="loginfom" id="formId" class="w-full h-full">
+  <div class="flex justify-center flex-wrap md:grid gap-1 sm:grid-cols-3 md:grid-cols-8 sm:gap-2">
+    <div *ngIf="date?.dirty || service?.dirty || city?.dirty " class=" rounded-sm mt-4 sm:mt-0">
+      <button (click)="clearFilter()" type="button" class="w-full h-full px-16 sm:px-3 py-3 text-black bg-white shadow-sm text-center font-semibold">Clear</button>
+    </div>
+    <div class="col-span-6 flex flex-wrap sm:flex-nowrap justify-center">
+      <div class="  my-2 sm:m-0">
+          <input type="date" formControlName="date" name="date" class="h-full w-full border mx-2 rounded-md px-3 py-3 outline-none" placeholder="Search by date" />
+      </div>
+      <div class="  mx-3 my-2 sm:m-0">
+           <select formControlName="city" id="city"  name="city" class="border mx-2 rounded-md h-full w-full px-3  outline-none">
+            <!-- <option [ngValue]="" [disabled]="true">City</option> -->
+            <option [ngValue]="null" disabled>City</option>
+            <option *ngFor="let city of cities" [ngValue]="city.name">{{ city.name }}</option>
+          </select>
+      </div>
+      <div class="  mx-3 my-2 sm:m-0">
+        <select formControlName="contract" id="contract"  name="contract" class="border mx-2 rounded-md h-full w-full px-3  outline-none">
+          <option [ngValue]="null" disabled>Service</option>
+          <option  *ngFor="let service of services" [ngValue]="service">{{ service.name }}</option>
+        </select>
+      </div>
+    </div>
+    <div class="bg-custPurple mx-2 rounded-sm mt-4 sm:mt-0">
+      <button type="submit" class="w-full h-full px-16 sm:px-3 py-4 text-white bg-custOrangeStr shadow-sm text-center font-semibold rounded-md">Search</button>
+    </div>
+  </div>
+  </form>

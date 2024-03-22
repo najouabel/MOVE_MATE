@@ -1,0 +1,139 @@
+
+<div class="bg-gray-200/60 h-screen w-full relative flex flex-row justify-center overflow-scroll py-10 px-4">
+
+  <div class="w-[650px] bg-white my-auto relative grid grid-cols-12 py-8 px-4 border shadow-md rounded-xl">
+    <div class="w-full flex justify-between p-4 absolute top-0">
+      <a class="text-black text-sm font-thin cursor-pointer" routerLink="/">Home?</a>
+      <a class="text-custPurple  cursor-pointer" routerLink="/login">Have an account? <strong>Log In</strong></a>
+    </div>
+
+      <div class="flex flex-col justify-around  col-start-2 col-end-12 ">
+        <form [formGroup]="signupForm" (ngSubmit)="onSubmit($event)" method="post" name="loginfom" id="formId">
+              <div class="text-center text-lg font-semibold text-black">
+                <img class="h-20 mx-auto mb-2 " src="assets/logo.png" alt="logo">
+                <!-- <h3 class="font-extrabold">Signup</h3> -->
+              </div>
+              <div>
+                  <div class="m-5 ">
+                      <!-- <div class="col-span-2 bg-red-200 "></div> -->
+                      <label>Username</label>
+                      <div class="">
+                          <input formControlName="username" class="w-full rounded-lg border  bg-gray-100 outline-none py-3 px-2" type="text" name="username"
+                                 placeholder="Full Name" required>
+                      </div>
+                      <div *ngIf="username?.invalid && (username?.dirty || username?.touched)"
+                      class="text-red-500 text-sm">
+
+                          <div *ngIf="username?.errors?.['required']">
+                              Username is required.
+                          </div>
+
+                      </div>
+                  </div>
+                  <div class="m-5 ">
+                      <!-- <div class="col-span-2 bg-red-200 "></div> -->
+                      <label >Email</label>
+                      <div class="">
+                          <input formControlName="email" class="w-full rounded-lg border  bg-gray-100 {{email?.valid && (email?.dirty || email?.touched) ? 'bg-green-50' : 'bg-white'}} outline-none py-3 px-2" type="email" name="email"
+                                 placeholder="Email" required>
+                      </div>
+                      <div *ngIf="email?.invalid && (email?.dirty || email?.touched)"
+                      class="text-red-500 text-sm">
+
+                          <div *ngIf="email?.errors?.['required']">
+                              Email is required.
+                          </div>
+                          <div *ngIf="email?.errors?.['email']">
+                              Email must be a valid email.
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="m-5 ">
+                    <!-- <div class="col-span-2 bg-red-200 "></div> -->
+                    <label >Phone</label>
+                    <div class="">
+                        <input formControlName="tele" class="w-full rounded-lg border  bg-gray-100 outline-none py-3 px-2" type="text" name="tele"
+                               placeholder="Phone" required>
+                    </div>
+                    <div *ngIf="tele?.invalid && (tele?.dirty || tele?.touched)"
+                    class="text-red-500 text-sm">
+
+                        <div *ngIf="tele?.errors?.['required']">
+                            Phone is required.
+                        </div>
+                    </div>
+
+                  </div>
+
+
+                  <div class="m-5 ">
+                      <!-- <div class="col-span-2 bg-red-200 "></div> -->
+                      <label >Password</label>
+                      <div class="">
+                          <input formControlName="password" class="w-full rounded-lg border  bg-gray-100 outline-none py-3 px-2" type="password" name="password"
+                                 placeholder="******" required>
+                      </div>
+                      <div *ngIf="password?.invalid && (password?.dirty || password?.touched)"
+                      class="text-red-500 text-sm">
+
+                          <div *ngIf="password?.errors?.['required']">
+                              Password is required.
+                          </div>
+                          <div *ngIf="password?.errors?.['pattern']">
+                              Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character.
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="m-5 ">
+                      <!-- <div class="col-span-2 bg-red-200 "></div> -->
+                      <label >Repeat Password</label>
+                      <div class="">
+                          <input formControlName="repeatpassword" class="w-full rounded-lg border  bg-gray-100 outline-none py-3 px-2" type="password" name="repeatpassword"
+                                 placeholder="******" required>
+                      </div>
+                      <div *ngIf="repeatpassword?.invalid && (repeatpassword?.dirty || repeatpassword?.touched)"
+                      class="text-red-500 text-sm">
+
+                          <div *ngIf="repeatpassword?.errors?.['required']">
+                              Password is required.
+                          </div>
+                          <div *ngIf="repeatpassword?.errors?.['pattern']">
+                              Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character.
+                          </div>
+                      </div>
+                  </div>
+
+
+
+
+
+
+
+                <div class="w-full flex justify-center">
+                  <button type="submit" [disabled]="!signupForm.valid" id="submitBtnId"
+                          class='mx-5 w-full border rounded-lg text-white text-md font-extrabold {{!signupForm.valid ? "bg-gray-200 text-gray-500" : "bg-custGray text-black"}}  shadow-sm rounded-sm py-3 '
+                  >
+                  <ng-container *ngIf="loading">
+                    Loading...
+                  </ng-container>
+                  <ng-container *ngIf="!loading">
+                    SIGN UP
+                  </ng-container>
+                  </button>
+                </div>
+              </div>
+
+          </form>
+
+  </div>
+
+  <div *ngIf="loadingSignupResult" class="loading-overlay flex justify-center items-center my-auto mx-auto">
+    <div class="h-1/4">
+      <lottie-player  src="animationSrc"  background="transparent"  speed="1" loop  autoplay >
+      </lottie-player>
+    </div>
+  </div>
+</div>
+</div>

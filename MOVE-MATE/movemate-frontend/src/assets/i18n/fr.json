@@ -1,0 +1,14 @@
+
+{
+  "login":"Login",
+  "logo":"assets/logo-fr.png",
+  "who-we-are-title": "Qui sommes nous?",
+  "who-we-are-content": " Movemate est une application de gestion de déménagement qui vise à faciliter la recherche et la réservation de services personnalisés en connectant directement les demandeurs aux déménageurs indépendants. Notre objectif est de simplifier le processus de déménagement pour le rendre plus pratique et accessible à tous. ",
+  "mission-title":"Notre mission",
+  "mission-content":" La mission de Movemate est de faciliter la recherche et la réservation de services de déménagement personnalisés en connectant directement les demandeurs aux déménageurs indépendants. Nous visons à simplifier le processus de déménagement pour le rendre plus pratique et accessible à tous.        ",
+  "How-does-it-work-title":"Comment ca marche?",
+  "How-does-it-work-content":"movemate offre une gamme de services de service transport, notamment le Petite camion, le Grand camion. Les utilisateurs peuvent choisir parmi ces services en fonction de leurs besoins spécifiques.",
+  "advantages": "Avantages NEOvalet",
+  "rapiditéservice":"assets/rapiditéservice.png"
+
+}

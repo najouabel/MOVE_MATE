@@ -1,0 +1,227 @@
+<div id="order" class="step bg-white h-auto flex flex-col justify-center shadow-lg border rounded-xl p-8 mx-3">
+  <div class="w-full bg-white grid grid-cols-12">
+    <div
+      class="flex flex-col justify-around col-start-2 col-end-12"
+    >
+      <form
+        [formGroup]="reservationForm"
+        (ngSubmit)="onFormSubmit($event)"
+        method="post"
+        name="reservationForm"
+        id="formId"
+      >
+        <div class="flex flex-col justify-center">
+              <!-- upper side side of form  -->
+
+              <!-- Departure Site -->
+              <!-- <div class="my-0 absolute h-10 bg-custGray "> -->
+                <h2 class="text-custGreen1 text-center font-bold text-xl">DEPARTURE</h2>
+              <!-- </div> -->
+              <div class="my-2  h-full rounded-sm">
+                <!-- <div class="col-span-2 bg-red-200 "></div> -->
+                <label  class="mx-2 pb-2 font-semibold">City</label>
+                <select
+                  id="departureSite"
+                  formControlName="departureSite"
+                  name="departureSite"
+                  class="border h-[50px] w-full px-4 outline-none rounded-md text-sm focus:border focus:border-custGreen1"
+                  (change)="onDateOrSiteChange()"
+                >
+                <!-- <option ngValue="undefined" [selected]="true" disabled="disabled">Select depature site</option> -->
+                <option [ngValue]="null" disabled>Select departure city</option>
+                <option
+                *ngFor="let departureSite of cities"
+                [ngValue]="departureSite.name"
+                >
+                {{ departureSite.name }}
+              </option>
+                </select>
+                <div
+                  *ngIf="
+                    departureSite?.invalid &&
+                    (departureSite?.dirty || departureSite?.touched)
+                  "
+                  class="text-red-500 text-sm"
+                >
+                  <div *ngIf="departureSite?.errors?.['required']">
+                    Departure City is required.
+                  </div>
+                </div>
+              </div>
+
+
+           <!-- Arrival -->
+
+
+              <div class="flex justify-between">
+                  <div class="mr-1 my-2 w-full rounded-sm">
+                    <!-- <div class="col-span-2 bg-red-200 "></div> -->
+                    <label  class="mx-2 pb-2 font-semibold">DATE</label>
+                    <input #selectedDepartDateRef (change)="onDateOrSiteChange()" class="border h-[50px] w-full rounded-md px-3 outline-none focus:border focus:border-custGreen1" [min]="departMinDate"  type="text" placeholder="Enter Date" onfocus="(this.type='date')" onblur="if(this.value==''){this.type='text'}" formControlName="departureDate" name="departureDate"  />
+                    <div
+                      *ngIf="
+                        departureDate?.invalid &&
+                        (departureDate?.dirty || departureDate?.touched)
+                      "
+                      class="text-red-500 text-sm"
+                    >
+                      <div *ngIf="departureDate?.errors?.['required']">
+                        Departure Date Point required.
+                      </div>
+                    </div>
+
+
+                  </div>
+
+              </div>
+
+
+
+
+                       <!-- Arrival Site -->
+                       <h2 class="text-custGreen1 text-center my-4 font-bold text-xl">ARRIVAL</h2>
+                       <div class="my-2  w-full rounded-sm">
+                         <!-- <div class="col-span-2 bg-red-200 "></div> -->
+                         <label  class="mx-2 pb-2 font-semibold">City</label>
+                         <select
+                           id="arrivalSite"
+                           formControlName="arrivalSite"
+                           name="departureSite"
+                           class="border h-[50px] w-full px-3 outline-none rounded-md text-sm focus:border focus:border-custGreen1 "
+                         >
+                          <option [ngValue]="null" disabled>Select arrival city</option>
+
+                           <option
+                             *ngFor="let arrivalSite of cities"
+                             [ngValue]="arrivalSite.name"
+                           >
+                             {{ arrivalSite.name }}
+                           </option>
+                         </select>
+                         <div
+                           *ngIf="
+                             arrivalSite?.invalid &&
+                             (arrivalSite?.dirty || arrivalSite?.touched)
+                           "
+                           class="text-red-500 text-sm"
+                         >
+                           <div *ngIf="departureSite?.errors?.['required']">
+                             Arrival City is required.
+                           </div>
+                         </div>
+                       </div>
+
+
+              <!-- SERVICE TYPE -->
+              <div class="my-2 w-full rounded-sm">
+                <!-- <div class="col-span-2 bg-red-200 "></div> -->
+                <label  class="mx-2 pb-2 font-semibold">Service</label>
+                <select
+                  formControlName="service"
+                  name="service"
+                  class="border h-[50px] w-full px-3 outline-none rounded-md text-sm focus:border focus:border-custGreen1 "
+                >
+                <option [ngValue]="null" disabled>Select service type</option>
+
+                  <option
+                    *ngFor="let service of services"
+                    [ngValue]="service.name"
+                  >
+                    {{ service.name }}
+                  </option>
+                </select>
+                <div
+                  *ngIf="
+                  service?.invalid &&
+                    (service?.dirty || service?.touched)
+                  "
+                  class="text-red-500 text-sm"
+                >
+                  <div *ngIf="service?.errors?.['required']">
+                    Service is required.
+                  </div>
+                </div>
+              </div>
+
+
+            <!-- !reservationForm.valid ? 'bg-gray-400' : 'bg-custGreen1' -->
+            <button
+            *ngIf="!showDetailedForm"
+            type="submit"
+            (click)="scrollToElement(quoteDiv)"
+            [disabled]="!reservationForm.valid || showQuote"
+
+            class="w-full my-4 {{
+                !reservationForm.valid  || showQuote? 'bg-gray-400' : 'bg-custOrangeStr'
+                }}  shadow-sm rounded-md py-3 text-white text-lg font-semibold
+                {{showQuote ? 'cursor-not-allowed' :''}}"
+            >
+              <ng-container *ngIf="isLoading">
+                Loading...
+              </ng-container>
+              <ng-container *ngIf="!isLoading">
+                 CONFIRM
+              </ng-container>
+
+            </button>
+        </div>
+
+
+
+      </form>
+    </div>
+  </div>
+</div>
+
+<div #quoteDiv >
+  <div *ngIf="showQuote" class="w-full">
+    <div [ngClass]="showQuote? 'opacity-100' : 'opacity-0'" class="transition-all ease-in-out duration-1000 delay-100">
+        <app-reservation-quote (showDetailedFormEmitter)="onShowDetailedForm($event)"></app-reservation-quote>
+    </div>
+  </div>
+</div>
+
+
+<ng-container *ngIf="showDetailedForm">
+  <div id="service" class="py-4 my-4 mx-3">
+    <div class="h-12 bg-custGray/30 flex justify-center items-center rounded-t-lg font-semibold">
+      Additional Services
+    </div>
+    <app-form-services></app-form-services>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="showDetailedForm">
+  <div id="signin" class="py-4 my-4 mx-3 ">
+    <div class="h-12 bg-custGray/30 flex justify-center items-center rounded-t-lg font-semibold">
+      Your information
+    </div>
+    <app-form-login></app-form-login>
+  </div>
+</ng-container>
+
+
+<ng-container *ngIf="showDetailedForm">
+  <div class="flex justify-center">
+    <button
+    type="submit"
+    (click)="onFormSubmit($event)"
+    [disabled]="!reservationForm.valid || showQuote || !isAuthenticated"
+    id="submitBtnId"
+    class="w-1/5 my-4 {{
+        !reservationForm.valid  || showQuote || !isAuthenticated? 'bg-gray-400' : 'bg-green-800/50'
+        }}  shadow-sm rounded-md py-3 text-white text-lg font-semibold
+        {{showQuote ? 'cursor-not-allowed' :''}}"
+    >
+      <ng-container *ngIf="isLoading">
+        Loading...
+      </ng-container>
+      <ng-container *ngIf="!isLoading">
+         RESERVE
+      </ng-container>
+
+    </button>
+  </div>
+</ng-container>
+
+
