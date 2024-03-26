@@ -6,6 +6,7 @@ interface User {
   tele: String;
   role: String;
   image?: String;
+  selected: boolean;
 
 }
 

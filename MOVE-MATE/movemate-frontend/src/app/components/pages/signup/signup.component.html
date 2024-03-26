@@ -31,7 +31,6 @@
                       </div>
                   </div>
                   <div class="m-5 ">
-                      <!-- <div class="col-span-2 bg-red-200 "></div> -->
                       <label >Email</label>
                       <div class="">
                           <input formControlName="email" class="w-full rounded-lg border  bg-gray-100 {{email?.valid && (email?.dirty || email?.touched) ? 'bg-green-50' : 'bg-white'}} outline-none py-3 px-2" type="email" name="email"
@@ -50,7 +49,6 @@
                   </div>
 
                   <div class="m-5 ">
-                    <!-- <div class="col-span-2 bg-red-200 "></div> -->
                     <label >Phone</label>
                     <div class="">
                         <input formControlName="tele" class="w-full rounded-lg border  bg-gray-100 outline-none py-3 px-2" type="text" name="tele"
@@ -104,6 +102,12 @@
                           </div>
                       </div>
                   </div>
+                <div class="m-5 flex justify-between">
+                  <select class="w-full rounded-lg border bg-gray-100 outline-none py-3 px-2"  >
+                    <option value="recipient">Recipient</option>
+                    <option value="provider">Provider</option>
+                  </select>
+                </div>
 
 
 

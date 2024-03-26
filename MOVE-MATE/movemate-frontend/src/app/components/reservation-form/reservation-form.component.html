@@ -11,14 +11,8 @@
         id="formId"
       >
         <div class="flex flex-col justify-center">
-              <!-- upper side side of form  -->
-
-              <!-- Departure Site -->
-              <!-- <div class="my-0 absolute h-10 bg-custGray "> -->
-                <h2 class="text-custGreen1 text-center font-bold text-xl">DEPARTURE</h2>
-              <!-- </div> -->
-              <div class="my-2  h-full rounded-sm">
-                <!-- <div class="col-span-2 bg-red-200 "></div> -->
+               <h2 class="text-custGreen1 text-center font-bold text-xl">DEPARTURE</h2>
+                <div class="my-2  h-full rounded-sm">
                 <label  class="mx-2 pb-2 font-semibold">City</label>
                 <select
                   id="departureSite"
@@ -50,13 +44,10 @@
               </div>
 
 
-           <!-- Arrival -->
-
 
               <div class="flex justify-between">
                   <div class="mr-1 my-2 w-full rounded-sm">
-                    <!-- <div class="col-span-2 bg-red-200 "></div> -->
-                    <label  class="mx-2 pb-2 font-semibold">DATE</label>
+                     <label  class="mx-2 pb-2 font-semibold">DATE</label>
                     <input #selectedDepartDateRef (change)="onDateOrSiteChange()" class="border h-[50px] w-full rounded-md px-3 outline-none focus:border focus:border-custGreen1" [min]="departMinDate"  type="text" placeholder="Enter Date" onfocus="(this.type='date')" onblur="if(this.value==''){this.type='text'}" formControlName="departureDate" name="departureDate"  />
                     <div
                       *ngIf="
@@ -78,8 +69,7 @@
 
 
 
-                       <!-- Arrival Site -->
-                       <h2 class="text-custGreen1 text-center my-4 font-bold text-xl">ARRIVAL</h2>
+                        <h2 class="text-custGreen1 text-center my-4 font-bold text-xl">ARRIVAL</h2>
                        <div class="my-2  w-full rounded-sm">
                          <!-- <div class="col-span-2 bg-red-200 "></div> -->
                          <label  class="mx-2 pb-2 font-semibold">City</label>
@@ -111,40 +101,9 @@
                          </div>
                        </div>
 
-
-              <!-- SERVICE TYPE -->
-              <div class="my-2 w-full rounded-sm">
-                <!-- <div class="col-span-2 bg-red-200 "></div> -->
-                <label  class="mx-2 pb-2 font-semibold">Service</label>
-                <select
-                  formControlName="service"
-                  name="service"
-                  class="border h-[50px] w-full px-3 outline-none rounded-md text-sm focus:border focus:border-custGreen1 "
-                >
-                <option [ngValue]="null" disabled>Select service type</option>
-
-                  <option
-                    *ngFor="let service of services"
-                    [ngValue]="service.name"
-                  >
-                    {{ service.name }}
-                  </option>
-                </select>
-                <div
-                  *ngIf="
-                  service?.invalid &&
-                    (service?.dirty || service?.touched)
-                  "
-                  class="text-red-500 text-sm"
-                >
-                  <div *ngIf="service?.errors?.['required']">
-                    Service is required.
-                  </div>
-                </div>
-              </div>
+          <input type="hidden" formControlName="service" name="service" value="RELOCATION">
 
 
-            <!-- !reservationForm.valid ? 'bg-gray-400' : 'bg-custGreen1' -->
             <button
             *ngIf="!showDetailedForm"
             type="submit"
@@ -187,9 +146,19 @@
     <div class="h-12 bg-custGray/30 flex justify-center items-center rounded-t-lg font-semibold">
       Additional Services
     </div>
-    <app-form-services></app-form-services>
+    <app-form-services
+      (selectCamion)="onSelectCamion($event)"
+    ></app-form-services>
+    <div class="h-12 bg-custGray/30 flex justify-center items-center rounded-t-lg font-semibold">
+      related users
+    </div>
+    <app-list-users
+    [users]="listUsers"
+    ></app-list-users>
   </div>
 </ng-container>
+
+
 
 <ng-container *ngIf="showDetailedForm">
   <div id="signin" class="py-4 my-4 mx-3 ">

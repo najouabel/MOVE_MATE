@@ -7,6 +7,7 @@ import { LoginComponent } from './components/pages/login/login.component';
 import { PageNotFoundComponent } from './components/pages/page-not-found/page-not-found.component';
 import { SignupComponent } from './components/pages/signup/signup.component';
 import {AdminDashboardComponent} from "./components/pages/admin-dashboard/admin-dashboard.component";
+import {GuardGuard} from "./guard/guard.guard";
 
 const routes: Routes = [
   {path : '', redirectTo: 'home', pathMatch: 'full'},

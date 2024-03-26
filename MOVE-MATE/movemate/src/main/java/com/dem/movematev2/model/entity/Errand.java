@@ -22,6 +22,7 @@ import java.time.LocalDateTime;
 public class Errand {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     private String _from;
     private String _to;
 

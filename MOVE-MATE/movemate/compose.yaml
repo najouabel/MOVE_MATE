@@ -1,0 +1,53 @@
+services:
+  movemate-db:
+    image: 'postgres:latest'
+    container_name: movemate
+    environment:
+      - POSTGRES_DB=dema
+      - POSTGRES_PASSWORD=najoua
+      - POSTGRES_USER=postgres
+      - PGDATA=/data/postgres
+    restart: always
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-U", "postgres" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    ports:
+      - "5432:5432"
+    volumes:
+      - type: volume
+        source: postgres-db
+        target: /var/lib/postgresql/data
+    networks:
+      - movemate
+
+
+  movemate-api:
+    container_name: movemate-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: movemate-api
+    ports:
+      - "8082:8081"
+    depends_on:
+      movemate-db:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - movemate
+
+networks:
+  movemate:
+    attachable: true
+    name: movemate
+    driver: bridge
+    enable_ipv6: true
+    ipam:
+      config:
+        - subnet: 2001:0DB7::/112
+
+volumes:
+  postgres-db:
+    driver: local

@@ -9,13 +9,14 @@ import java.util.List;
 @Entity
 @DiscriminatorValue("2")
 @NoArgsConstructor
+
 public class Recipient extends User {
 
     @OneToMany(mappedBy = "recipient", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Reservation> reservationList;
 
     public Recipient(User parent) {
-        super(parent.getEmail(), parent.getUsername(), parent.getTele(), parent.getRole(), parent.getPassword());
+        super(parent.getId(),parent.getEmail(), parent.getUsername(), parent.getTele(), parent.getRole(), parent.getPassword());
     }
 
 }

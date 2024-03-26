@@ -34,7 +34,6 @@ export class HomeComponent implements OnInit {
 
     steps.forEach((step: HTMLElement) => {
       if(window.scrollY >= step.offsetTop ) {
-        console.log(this.reservationService.current)
         this.reservationService.current = step.getAttribute('id') ?? 'order'
       }
     })

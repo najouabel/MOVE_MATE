@@ -9,6 +9,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -37,6 +38,7 @@ public class JwtAuthFilter extends OncePerRequestFilter implements Filter {
         this.mapper = mapper;
     }
 
+
     @Override
     protected void doFilterInternal(
             HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -49,8 +51,6 @@ public class JwtAuthFilter extends OncePerRequestFilter implements Filter {
             filterChain.doFilter(request,response);
             return;
         }
-
-        //extract jwt, email and userrole
         token = authHeader.substring(7);
         userEmail = jwtHandler.extractUsername(token);
         String userRole = jwtHandler.extractRole(token);

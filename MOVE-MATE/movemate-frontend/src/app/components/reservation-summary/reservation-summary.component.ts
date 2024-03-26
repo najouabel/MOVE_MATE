@@ -52,8 +52,7 @@ export class ReservationSummaryComponent implements OnInit {
 
         this.arrivalSite = this.departSite;
 
-        // this.arrivalSite = this.allSites.find(elm => elm?.id === this.reservationForm.arrivalSite?.id)?.name;
-      }
+       }
     })
 
   }

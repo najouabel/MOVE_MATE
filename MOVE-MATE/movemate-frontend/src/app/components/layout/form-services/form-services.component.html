@@ -1,5 +1,5 @@
 <ng-container>
-<div class="grid grid-cols-3 grid-rows-2 border">
+<div class="grid grid-cols-3 grid-rows-1 border">
       <div *ngFor="let service of parkServices" class="px-4 py-3 h-full">
     <input hidden value="{{service.id}}" />
     <div class="flex justify-center items-center py-3 px-6 font-semibold h-full">
@@ -14,7 +14,7 @@
         </div>
 
         <div class="flex justify-between border-t-2 py-2 px-3 items-center mx-2">
-          <div class="my-auto"> {{service.price}}$</div>
+          <div class="my-auto"> {{service.price}}DH</div>
           <div (click)="onServiceAdd(service)" class="cursor-pointer rounded-full hover:bg-custGray/30">
             <img class="h-auto w-26" class="h-8" src="assets/add.svg" />
           </div>

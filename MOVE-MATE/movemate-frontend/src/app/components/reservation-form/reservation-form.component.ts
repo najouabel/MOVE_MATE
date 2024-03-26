@@ -1,6 +1,6 @@
 
 import { ReservationService } from './../../services/reservation/reservation.service';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SiteService } from 'src/app/services/reservation/site.service';
@@ -9,6 +9,9 @@ import { ParkService } from 'src/app/interfaces/ParkService';
 import { Service } from 'src/app/interfaces/Service';
 import { City } from 'src/app/interfaces/City';
 import { reservationRequest } from 'src/app/interfaces/reservationRequest';
+import {API_URL} from "../../../config/api.constants";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {User} from "../../interfaces/user";
 
 @Component({
   selector: 'app-reservation-form',
@@ -17,6 +20,8 @@ import { reservationRequest } from 'src/app/interfaces/reservationRequest';
 })
 export class ReservationFormComponent implements OnInit {
   reservationForm!:FormGroup;
+   listUsers: Array<User> =[];
+
   completedReservation!: {
     form:reservationRequest,
     services: ParkService[]
@@ -27,9 +32,6 @@ export class ReservationFormComponent implements OnInit {
   departMinDate!:any;
   departureHours:any[] = [];
   arrivalHours:any[] = [];
-  departureMeetingPoints:any[] = [];
-  arrivalMeetingPoints:any[] = [];
-  selectedSite!:string;
   selectedServices:ParkService[] = [];
   isAuthenticated:boolean = false;
   isLoading:boolean = false;
@@ -42,9 +44,7 @@ export class ReservationFormComponent implements OnInit {
   @Output() public toggleShowDetailedForm = new EventEmitter();
 
 
-  selectUndefinedOptionValue:any;
-
-  constructor(private reservationService:ReservationService, private authService:AuthService, private siteService:SiteService, private router:Router) {
+  constructor(private reservationService:ReservationService, private authService:AuthService, private siteService:SiteService, private router:Router,private http: HttpClient) {
     this.authService.getAuthState().subscribe((newState) => {
       this.isAuthenticated = newState
     });
@@ -54,12 +54,15 @@ export class ReservationFormComponent implements OnInit {
     this.services = [
       {name : "RELOCATION"}
     ]
+
     // get sites
     this.siteService.getSites().subscribe(
       (response) => {
                  this.cities = response;
                  this.reservationService.updateDepartSitesState(this.cities);
       });
+
+
 
       this.reservationForm = new FormGroup({
         departureSite : new FormControl(null, [
@@ -73,7 +76,6 @@ export class ReservationFormComponent implements OnInit {
           Validators.required
           ],),
         service: new FormControl(null, [
-          Validators.required
         ],),
       })
 
@@ -126,32 +128,54 @@ export class ReservationFormComponent implements OnInit {
 
 
   onFormSubmit(event:any){
-    //echo values of reserv
-    // this.reservationService.reservFormSub.next(this.reservationForm);
+
     if(this.showDetailedForm){
       this.onSubmit(event);
-      // console.log(" after submission ", event)
+
     } else {
       this.showQuote = true;
     }
   }
 
   onSubmit(event:any) {
+    console.log("Selected Services:", this.selectedServices);
+    console.log("Form Data:", this.reservationForm.value);
     this.completedReservation = {
        form: this.reservationForm.value,
        services: this.selectedServices
     }
 
     this.isLoading = true;
-    this.reservationService.saveReservation(this.completedReservation).subscribe(
+    this.reservationService.saveReservation(this.reservationForm.value).subscribe(
       {
         next: (resp:any) => {
+          this.http
+            .post(
+              `${API_URL}/reservations`,{
+                "errandId" : resp.id
+              } , {headers : new HttpHeaders({
+                  'Content-Type': 'application/json'
+                })}
+            ).subscribe({
+              next: () => {
+                alert("La réservation a été sauvegardée avec succès !");
+                window.location.href = '/home';
+              },
+              error: (error: any) => {
+                console.error("Erreur lors de la sauvegarde de la réservation :", error);
+
+              }
+          })
+
+          console.log("Response from API:", resp);
           console.log("data ", resp );
           if(resp.status == 201){
             this.onSuccess();
+            // Alert
           }
         },
-        error: err => {
+        error: (err: any) => {
+          console.error("Error from API:", err);
           this.onError()
         }
       }).add(() => {
@@ -185,4 +209,17 @@ export class ReservationFormComponent implements OnInit {
   get arrivalSite (){ return this.reservationForm.get('arrivalSite')};
   get departureDate (){ return this.reservationForm.get('departureDate')};
   get service() {return this.reservationForm.get('service')};
+
+  onSelectCamion(id: string) {
+    // this.listUsers = [];
+
+      this.listUsers.push({
+        username: "ahmed"+id,
+        adress: "adress"+id,
+        tele: "07878787"+id,
+        role: "provider"+id,
+        image:"https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        selected:false
+      })
+  }
 }

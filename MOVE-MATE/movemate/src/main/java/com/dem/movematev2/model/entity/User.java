@@ -51,6 +51,16 @@ public class User implements UserDetails, Serializable {
     public User(){
     }
 
+    public User(Long id,String email, String username, String tele, UserRole role, String password) {
+        this.id = id;
+        this.email = email;
+        this.username = username;
+        this.tele = tele;
+        this.role = role;
+        this.password = password;
+        this.getAuthorities();
+    }
+
     public User(String email, String username, String tele, UserRole role, String password) {
         this.email = email;
         this.username = username;

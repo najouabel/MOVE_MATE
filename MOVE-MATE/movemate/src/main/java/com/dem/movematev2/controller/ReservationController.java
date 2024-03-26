@@ -10,7 +10,10 @@ import jakarta.annotation.security.RolesAllowed;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -23,15 +26,17 @@ public class ReservationController {
 
     @PostMapping
     public ResponseEntity<?> save(
-            Authentication authentication,
-           @RequestBody ReservationRequest reservationRequest ) throws IllegalAccessException {
+            @RequestBody ReservationRequest reservationRequest){
         final ReservationDTO reservationDTO =
-                reservationService.save(
-                        reservationRequest,
-                        (User) authentication.getPrincipal() );
+                reservationService.save(reservationRequest);
+
 
         return ResponseEntity.status(201).body(reservationDTO);
     }
+
+
+
+
 
     @GetMapping
     public ResponseEntity<?> getAll(

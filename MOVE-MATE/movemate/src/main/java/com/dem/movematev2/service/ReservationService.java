@@ -7,15 +7,22 @@ import com.dem.movematev2.model.ReservationRequest;
 import com.dem.movematev2.model.entity.*;
 import com.dem.movematev2.repository.RecipientRepository;
 import com.dem.movematev2.repository.ReservationRepository;
+import com.dem.movematev2.repository.UserRepository;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -24,18 +31,34 @@ public class ReservationService {
 
     private final EntityManager entityManager;
     private final ErrandService errandService;
-    private final ReservationRepository reservationRepository;
     private final RecipientRepository recipientRepository;
+    private final UserRepository userRepository;
 
-    public ReservationDTO save(ReservationRequest reservationRequest, User recipient) throws IllegalAccessException {
-        if(recipient instanceof ServiceProvider) throw new IllegalAccessException("User Not Allowed to Create Reservation");
+    public ReservationDTO save(ReservationRequest reservationRequest) {
 
         Errand errand = errandService.getById( reservationRequest.errandId() );
+
+        Authentication authentication = SecurityContextHolder
+                .getContext()
+                .getAuthentication();
+
+        if (authentication == null ||
+                !authentication.isAuthenticated() ||
+                authentication instanceof AnonymousAuthenticationToken)
+            throw new RuntimeException("User not authenticated");
+
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        Optional<User> user = userRepository.findByUsername(userDetails.getUsername());
+
+        if(user.isEmpty())  throw new RuntimeException("User not exist");
+
+
+        errand.setServiceProvider( (ServiceProvider) user.get() );
 
         Reservation reservation =
                 Reservation.builder()
                     .errand( errand )
-                    .recipient( (Recipient) recipient )
+                    .recipient( new Recipient(user.get() ))
                     .build();
 
         reservationRepository.save( reservation );
@@ -43,6 +66,8 @@ public class ReservationService {
 
         return toDTO( reservation );
     }
+
+    private final ReservationRepository reservationRepository;
 
 
     public Page<ReservationDTO> getAll(Integer page, Integer maxItems){

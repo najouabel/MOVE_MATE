@@ -9,14 +9,21 @@ import com.dem.movematev2.model.entity.Recipient;
 import com.dem.movematev2.model.entity.ServiceProvider;
 import com.dem.movematev2.model.entity.User;
 import com.dem.movematev2.repository.ErrandRepository;
+import com.dem.movematev2.repository.UserRepository;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -24,10 +31,24 @@ import org.springframework.transaction.annotation.Transactional;
 public class ErrandService {
 
     private final EntityManager entityManager;
+    private final UserRepository userRepository;
     private final ErrandRepository errandRepository;
 
-    public ErrandDTO save(ErrandRequest errandRequest, User serviceProvider) throws IllegalAccessException {
-        if(serviceProvider instanceof Recipient) throw new IllegalAccessException("User Not Allowed to Create Errand");
+    public ErrandDTO save(ErrandRequest errandRequest){
+        Authentication authentication = SecurityContextHolder
+                .getContext()
+                .getAuthentication();
+
+        if (authentication == null ||
+                !authentication.isAuthenticated() ||
+                authentication instanceof AnonymousAuthenticationToken)
+            throw new RuntimeException("User not authenticated");
+
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        Optional<User> user = userRepository.findByUsername(userDetails.getUsername());
+
+        if(user.isEmpty())  throw new RuntimeException("User not exist");
+
         Errand errand =
                 Errand.builder()
                     ._from(errandRequest._from())
@@ -35,15 +56,11 @@ public class ErrandService {
                     .description(errandRequest.description())
                     .meantype(errandRequest.meantype())
                     .service(errandRequest.service())
+                        .serviceProvider(new ServiceProvider( user.get() ))
                     .build();
 
-
-        errand.setServiceProvider( (ServiceProvider) serviceProvider );
-        errandRepository.save(errand);
-        entityManager.flush();
-        return toDTO(errand);
+        return toDTO(errandRepository.saveAndFlush(errand));
     }
-
 
     public Page<ErrandDTO> getAll(Integer page, Integer maxItems){
         Pageable pageable =

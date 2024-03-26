@@ -20,13 +20,10 @@ public class ErrandController {
     private final ErrandService errandService;
 
     @PostMapping
-    public ResponseEntity<?> save(
-            Authentication authentication,
-           @RequestBody ErrandRequest errandRequest ) throws IllegalAccessException {
+    public ResponseEntity<ErrandDTO> save(
+           @RequestBody ErrandRequest errandRequest ) {
         final ErrandDTO errandDTO =
-                errandService.save(
-                        errandRequest,
-                        (User) authentication.getPrincipal() );
+                errandService.save(errandRequest);
         return ResponseEntity.status(201).body(errandDTO);
     }
 

@@ -31,18 +31,12 @@ export class SignupComponent implements OnInit {
       ),
       password: new FormControl('',[
         Validators.required,
-        // Validators.pattern("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$")
-        ],),
+         ],),
       repeatpassword: new FormControl('',[
         Validators.required,
-        // Validators.pattern("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$")
-        ],),
-      tele: new FormControl('',[
-        Validators.required
-        ],),
-      toSubscribe: new FormControl(true,[
-
-        ],),
+         ],),
+      tele: new FormControl('',[ Validators.required],),
+      toSubscribe: new FormControl(true,[],),
 
     })
   }
@@ -53,28 +47,27 @@ export class SignupComponent implements OnInit {
 
   onSubmit(event:any) {
     this.loading = true;
-    console.log(" isnode ")
     const {repeatpassword, ...rest} = this.signupForm.value;
 
-    console.warn(this.signupRequest);
     //signup user
     this.authService.signup(rest).subscribe(
       {
         next: data => {
           console.log("data ", data );
           this.isSuccess = true;
+          console.log(this.isSuccess)
         },
         error: err => this.isSuccess = false
       }).add(() => {
         this.loading = false;
-        if(!this.isSuccess) return;
-        this.router.navigate(['/home'])
+        if(this.isSuccess) return;
+
+        this.router.navigate(['/login'])
         .then(() => {
           window.location.reload();
         });
       });
   }
-
 
   get username (){ return this.signupForm.get('username')};
   get tele (){ return this.signupForm.get('tele')};
@@ -82,4 +75,6 @@ export class SignupComponent implements OnInit {
   get password (){ return this.signupForm.get('password')};
   get repeatpassword (){ return this.signupForm.get('repeatpassword')};
   get toSubscribe (){ return this.signupForm.get('toSubscribe')};
+
+
 }

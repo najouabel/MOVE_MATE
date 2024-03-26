@@ -40,6 +40,7 @@ import { ProviderDashboardComponent } from './components/pages/provider-dashboar
  import { AddOfferComponent } from './components/add-offer/add-offer.component';
 import {ProviderSideBarComponent} from "./components/provider-side-bar/provider-side-bar.component";
 import {ReservationQuoteComponent} from "./components/reservation-quote/reservation-quote.component";
+import { ListUsersComponent } from './components/layout/list-users/list-users.component';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -78,7 +79,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     OfferComponent,
     SearchBarComponent,
     ProviderDashboardComponent,
-    AddOfferComponent
+    AddOfferComponent,
+    ListUsersComponent
     ],
   imports: [
     BrowserModule,

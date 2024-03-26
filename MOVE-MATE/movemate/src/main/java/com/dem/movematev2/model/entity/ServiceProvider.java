@@ -24,7 +24,7 @@ public class ServiceProvider extends User {
     private List<Errand> errandList;
 
     public ServiceProvider(User parent) {
-        super(parent.getEmail(), parent.getUsername(), parent.getTele(), parent.getRole(), parent.getPassword());
+        super(parent.getId(),parent.getEmail(), parent.getUsername(), parent.getTele(), parent.getRole(), parent.getPassword());
     }
 
     public void addErrand(Errand errand){

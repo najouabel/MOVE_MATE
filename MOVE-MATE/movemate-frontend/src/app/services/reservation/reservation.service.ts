@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 import { Reservation } from 'src/app/interfaces/reservation';
 import { Response } from 'src/app/interfaces/response';
 import { API_URL } from 'src/config/api.constants';
+ import {Service} from "../../interfaces/Service";
+ import {ParkService} from "../../interfaces/ParkService";
 
 @Injectable({
   providedIn: 'root'
@@ -29,12 +31,29 @@ export class ReservationService {
     })
    }
 
-  saveReservation(reservation: any) : Observable<Response<Reservation>>{
-    console.log(" inside save reserv ", reservation)
-    return this.http
-    .post<Response<Reservation>>(
-            `${API_URL}/reservations/add`, reservation, {headers : this.headers}
-            );
+    saveReservation(reservation: any) {
+      console.log(reservation)
+      console.log((this.selectedServicesSubj.value[0] as ParkService).name)
+      console.log({
+        "service": reservation.service,
+        "description": reservation.departureDate,
+        "meantype": (this.selectedServicesSubj.value[0] as ParkService).name,
+        "_to": reservation.arrivalSite,
+        "_from": reservation.departureSite
+      })
+      return this.http
+        .post<{
+          id: number
+        }>(
+          `${API_URL}/errands`,
+          {
+            "service": reservation.service,
+            "description": reservation.departureDate,
+            "meantype": (this.selectedServicesSubj.value[0] as ParkService).name,
+            "_to": reservation.arrivalSite,
+            "_from": reservation.departureSite
+          }, {headers : this.headers}
+        )
   }
 
 

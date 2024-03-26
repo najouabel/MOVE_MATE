@@ -19,7 +19,7 @@ export class JwtHandlerService {
     }
 
     decodeToken() {
-      if(!this.jwtToken) this.jwtToken = this.storageService.get("govalet-token")!;
+      if(!this.jwtToken) this.jwtToken = this.storageService.get("movemate-token")!;
       if (this.jwtToken) {
        this.decodedToken = jwt_decode(this.jwtToken);
       }
